@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/QuentinPerez/go-radosgw/pkg/api"
+	"github.com/click2cloud-alpha/c2c-go-ceph/pkg/api"
 )
 
 func main() {
@@ -12,10 +12,10 @@ func main() {
 	var prefix = "admin"
 
 	api, error := radosAPI.New(url, access_key, secretKey, prefix)
-	if(error!=nil){
+	if error != nil {
 		fmt.Println(error)
 	}
-	if(error == nil) {
+	if error == nil {
 		fmt.Println(api)
 	}
 	//user, err := api.CreateUser(radosAPI.UserConfig{
@@ -26,9 +26,7 @@ func main() {
 	//fmt.Println(err)
 	//fmt.Println(user)
 
-	bucket, error := api.GetBucket(radosAPI.BucketConfig{
-
-	})
+	bucket, error := api.GetBucket(radosAPI.BucketConfig{})
 	fmt.Println(bucket)
 	fmt.Println(error)
 }

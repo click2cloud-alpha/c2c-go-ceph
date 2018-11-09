@@ -19,8 +19,8 @@ func main() {
 		fmt.Println(api)
 	}
 	//user, err := api.CreateUser(radosAPI.UserConfig{
-	//	UID:         "Aditya",
-	//	DisplayName: "Aditya Bammrotwar",
+	//	UID:         "user1",
+	//	DisplayName: "User1",
 	//})
 	//
 	//fmt.Println(err)

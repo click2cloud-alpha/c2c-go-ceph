@@ -1,14 +1,14 @@
 package main
 
 import (
+	"c2c-go-ceph/pkg/api"
 	"fmt"
-	"github.com/click2cloud-alpha/c2c-go-ceph/pkg/api"
 )
 
 func main() {
 	var access_key = "VX6NBR04LD2YAPQXWN9I"
 	var secretKey = "QGg0xdIlq2e6HiWAjpJrgQuXhjy20hOA8FxCm7xN"
-	var url = "http://192.168.1.173:7480"
+	var url = "http://192.168.1.173:8443"
 	var prefix = "admin"
 
 	api, error := radosAPI.New(url, access_key, secretKey, prefix)
@@ -25,8 +25,10 @@ func main() {
 	//
 	//fmt.Println(err)
 	//fmt.Println(user)
+	fmt.Println("API____", api)
 
 	bucket, error := api.GetBucket(radosAPI.BucketConfig{})
-	fmt.Println(bucket)
-	fmt.Println(error)
+	fmt.Println("bucket---", bucket)
+	fmt.Println("Error-------", error)
+
 }

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"c2c-go-ceph/pkg/api"
 	"fmt"
-	"github.com/click2cloud-alpha/c2c-go-ceph/pkg/api"
 )
 
 func main() {
@@ -66,4 +66,5 @@ func main() {
 	if error != nil {
 		fmt.Println(error)
 	}
+	fmt.Println("Testing the branch on remote repository")
 }

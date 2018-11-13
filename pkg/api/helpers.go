@@ -3,6 +3,7 @@ package radosAPI
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/url"
 	"time"
 
@@ -478,6 +479,8 @@ func (api *API) GetBucket(conf BucketConfig) (Buckets, error) {
 	if err = json.Unmarshal(body, &variant); err != nil {
 		return nil, err
 	}
+
+	fmt.Println(body)
 	if tab, ok := variant.([]interface{}); ok {
 		add := Bucket{}
 		for _, v := range tab {

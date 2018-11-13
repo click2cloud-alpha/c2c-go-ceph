@@ -8,7 +8,7 @@ import (
 
 	"strings"
 
-	minio "github.com/minio/minio-go"
+	"github.com/minio/minio-go"
 	. "github.com/smartystreets/goconvey/convey"
 )
 

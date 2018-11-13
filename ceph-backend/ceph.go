@@ -18,19 +18,18 @@ func main() {
 	if error == nil {
 		fmt.Println(api)
 	}
-	//new_user, err := api.CreateUser(radosAPI.UserConfig{
-	//	UID:"user1",
-	//	AccessKey:"TestUserAccessKey",
-	//	SecretKey:"TestUserSecretKey",
-	//	DisplayName:"User 1",
-	//})
-	//if err!=nil{
-	//	fmt.Println(err)
-	//}
-	//if new_user!= nil{
-	//	fmt.Println(new_user)
-	//}
-	user, err := api.GetUser("user1")
+	new_user, err := api.CreateUser(radosAPI.UserConfig{
+		UID: "nilima",
+
+		DisplayName: "Nilima",
+	})
+	if err != nil {
+		fmt.Println(err)
+	}
+	if new_user != nil {
+		fmt.Println(new_user)
+	}
+	user, err := api.GetUser("nilima")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -47,17 +46,17 @@ func main() {
 		fmt.Println(api1)
 	}
 	bucketConfig := radosAPI.BucketConfig{
-		Bucket: "opensds-test1",
+		Bucket: "opensds-test-nilima",
 		UID:    uid,
 		Prefix: false,
 		Stats:  true,
 	}
 	//api, err := radosAPI.New(url, )
-	//error = api1.LinkBucket(bucketConfig)
-	//if error != nil{
-	//	fmt.Println("Something went wrong ")
-	//	fmt.Println(error)
-	//}
+	error = api1.LinkBucket(bucketConfig)
+	if error != nil {
+		fmt.Println("Something went wrong ")
+		fmt.Println(error)
+	}
 
 	buck, error := api1.GetBucket(bucketConfig)
 	if buck != nil {

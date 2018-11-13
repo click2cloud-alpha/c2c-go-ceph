@@ -6,8 +6,6 @@ import (
 	"net/url"
 	"time"
 
-	"fmt"
-
 	"github.com/QuentinPerez/go-encodeUrl"
 )
 
@@ -443,6 +441,7 @@ type BucketConfig struct {
 	Fix          bool   `url:"fix,ifBoolIsTrue"`           // Also fix the bucket index when checking
 	PurgeObjects bool   `url:"purge-objects,ifBoolIsTrue"` // Remove a buckets objects before deletion
 	Object       string `url:"object,ifStringIsNotEmpty"`  // The object to remove
+	Prefix       bool   `url:"prefix,ifBoolIsTrue"`        // Prefix if true
 }
 
 // GetBucket gets information about a subset of the existing buckets.
@@ -468,7 +467,11 @@ func (api *API) GetBucket(conf BucketConfig) (Buckets, error) {
 		return nil, errs[0]
 	}
 	values.Add("format", "json")
-	body, _, err := api.call("GET", "/bucket", values, true)
+	prefix := true
+
+	prefix = conf.Prefix
+
+	body, _, err := api.call("GET", "/bucket", values, prefix)
 	if err != nil {
 		return nil, err
 	}
@@ -534,7 +537,10 @@ func (api *API) RemoveBucket(conf BucketConfig) error {
 		return errs[0]
 	}
 	values.Add("format", "json")
-	_, _, err := api.call("DELETE", "/bucket", values, true)
+	prefix := true
+
+	prefix = conf.Prefix
+	_, _, err := api.call("DELETE", "/bucket", values, prefix)
 	return err
 }
 
@@ -563,7 +569,10 @@ func (api *API) UnlinkBucket(conf BucketConfig) error {
 		return errs[0]
 	}
 	values.Add("format", "json")
-	_, _, err := api.call("POST", "/bucket", values, true)
+	prefix := true
+
+	prefix = conf.Prefix
+	_, _, err := api.call("POST", "/bucket", values, prefix)
 	return err
 }
 
@@ -590,7 +599,10 @@ func (api *API) CheckBucket(conf BucketConfig) (string, error) {
 		return "", errs[0]
 	}
 	values.Add("format", "json")
-	body, _, err := api.call("GET", "/bucket", values, true, "index")
+	prefix := true
+
+	prefix = conf.Prefix
+	body, _, err := api.call("GET", "/bucket", values, prefix, "index")
 	return string(body), err
 }
 
@@ -608,7 +620,7 @@ func (api *API) LinkBucket(conf BucketConfig) error {
 	)
 
 	// FIXME doesn't work
-	return fmt.Errorf("LinkBucket not implemented yet")
+	//return fmt.Errorf("LinkBucket not implemented yet")
 	if conf.Bucket == "" {
 		return errors.New("Bucket field is required")
 	}
@@ -620,7 +632,10 @@ func (api *API) LinkBucket(conf BucketConfig) error {
 		return errs[0]
 	}
 	values.Add("format", "json")
-	body, _, err := api.call("PUT", "/bucket", values, true)
+	prefix := true
+
+	prefix = conf.Prefix
+	body, _, err := api.call("PUT", "/bucket", values, prefix)
 	// return string(body), err
 	_ = body
 	return err
@@ -650,7 +665,10 @@ func (api *API) RemoveObject(conf BucketConfig) error {
 		return errs[0]
 	}
 	values.Add("format", "json")
-	_, _, err := api.call("DELETE", "/bucket", values, true, "object")
+	prefix := true
+
+	prefix = conf.Prefix
+	_, _, err := api.call("DELETE", "/bucket", values, prefix, "object")
 	return err
 }
 
@@ -675,7 +693,10 @@ func (api *API) GetBucketPolicy(conf BucketConfig) (*Policy, error) {
 		return nil, errs[0]
 	}
 	values.Add("format", "json")
-	body, _, err := api.call("GET", "/bucket", values, true, "policy")
+	prefix := true
+
+	prefix = conf.Prefix
+	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -708,7 +729,10 @@ func (api *API) GetObjectPolicy(conf BucketConfig) (*Policy, error) {
 		return nil, errs[0]
 	}
 	values.Add("format", "json")
-	body, _, err := api.call("GET", "/bucket", values, true, "policy")
+	prefix := true
+
+	prefix = conf.Prefix
+	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -858,7 +882,6 @@ func (api *API) DelCapability(conf CapConfig) ([]Capability, error) {
 
 // here new function implemented
 
-
 // BucketConfig bucket request
 type ObjectConfig struct {
 	Bucket       string `url:"bucket,ifStringIsNotEmpty"`  // The bucket to return info on
@@ -870,6 +893,6 @@ type ObjectConfig struct {
 	Object       string `url:"object,ifStringIsNotEmpty"`  // The object to remove
 }
 
-func (api *API) PutObject (config ObjectConfig) {
+func (api *API) PutObject(config ObjectConfig) {
 
 }

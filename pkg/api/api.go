@@ -46,6 +46,7 @@ func (api *API) makeRequest(verb, url string) (body []byte, statusCode int, err 
 		SecretAccessKey: api.secretKey,
 		Expiration:      time.Now().Add(1 * time.Minute)},
 	)
+	fmt.Println(req)
 	resp, err := client.Do(req)
 	if err != nil {
 		return

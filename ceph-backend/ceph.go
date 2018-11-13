@@ -18,15 +18,39 @@ func main() {
 	if error == nil {
 		fmt.Println(api)
 	}
-	//user, err := api.CreateUser(radosAPI.UserConfig{
-	//	UID:         "user1",
-	//	DisplayName: "User1",
+	//new_user, err := api.CreateUser(radosAPI.UserConfig{
+	//	UID:"user1",
+	//	AccessKey:"TestUserAccessKey",
+	//	SecretKey:"TestUserSecretKey",
+	//	DisplayName:"User 1",
 	//})
-	//
-	//fmt.Println(err)
-	//fmt.Println(user)
+	//if err!=nil{
+	//	fmt.Println(err)
+	//}
+	//if new_user!= nil{
+	//	fmt.Println(new_user)
+	//}
+	user, err := api.GetUser("user1")
+	if err != nil {
+		fmt.Println(err)
+	}
+	//var user_ak = user.Keys[0].AccessKey
+	//var user_sk = user.Keys[0].SecretKey
+	var uid = user.Keys[0].User
+	//fmt.Printf("Access Key: %v Secret Key: %v\n UID: %T\n ",user_ak, user_sk,uid)
 
-	bucket, error := api.GetBucket(radosAPI.BucketConfig{})
-	fmt.Println(bucket)
-	fmt.Println(error)
+	//api1, error1 := radosAPI.New(url, user_ak, user_sk, uid)
+	//if error != nil {
+	//	fmt.Println(error1)
+	//}
+	//if error == nil {
+	//	fmt.Println(api1)
+	//}
+	bucketConfig := radosAPI.BucketConfig{
+		Bucket: "opensds-test",
+		UID:    uid,
+	}
+	//api, err := radosAPI.New(url, )
+	api.LinkBucket(bucketConfig)
+
 }

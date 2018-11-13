@@ -73,6 +73,7 @@ func (api *API) call(verb, route string, args url.Values, usePrefix bool, sub ..
 	if usePrefix {
 		route = fmt.Sprintf("/%s%s", api.prefix, route)
 	}
+	fmt.Println(route)
 	body, statusCode, err = api.makeRequest(verb, fmt.Sprintf("%v%v?%v%s", api.host, route, subreq, args.Encode()))
 	if statusCode != 200 {
 		err = fmt.Errorf("[%v]: %v", statusCode, err)

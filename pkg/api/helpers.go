@@ -471,7 +471,7 @@ func (api *API) GetBucket(conf BucketConfig) (Buckets, error) {
 
 	prefix = conf.Prefix
 
-	body, _, err := api.call("GET", "/bucket", values, prefix)
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix)
 	if err != nil {
 		return nil, err
 	}
@@ -540,7 +540,7 @@ func (api *API) RemoveBucket(conf BucketConfig) error {
 	prefix := true
 
 	prefix = conf.Prefix
-	_, _, err := api.call("DELETE", "/bucket", values, prefix)
+	_, _, err := api.call("DELETE", "/"+conf.Bucket, values, prefix)
 	return err
 }
 
@@ -572,7 +572,7 @@ func (api *API) UnlinkBucket(conf BucketConfig) error {
 	prefix := true
 
 	prefix = conf.Prefix
-	_, _, err := api.call("POST", "/bucket", values, prefix)
+	_, _, err := api.call("POST", "/"+conf.Bucket, values, prefix)
 	return err
 }
 
@@ -602,7 +602,7 @@ func (api *API) CheckBucket(conf BucketConfig) (string, error) {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("GET", "/bucket", values, prefix, "index")
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix, "index")
 	return string(body), err
 }
 
@@ -635,7 +635,7 @@ func (api *API) LinkBucket(conf BucketConfig) error {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("PUT", "/bucket", values, prefix)
+	body, _, err := api.call("PUT", "/"+conf.Bucket, values, prefix)
 	// return string(body), err
 	_ = body
 	return err
@@ -668,7 +668,7 @@ func (api *API) RemoveObject(conf BucketConfig) error {
 	prefix := true
 
 	prefix = conf.Prefix
-	_, _, err := api.call("DELETE", "/bucket", values, prefix, "object")
+	_, _, err := api.call("DELETE", "/"+conf.Bucket, values, prefix, "object")
 	return err
 }
 
@@ -696,7 +696,7 @@ func (api *API) GetBucketPolicy(conf BucketConfig) (*Policy, error) {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -732,7 +732,7 @@ func (api *API) GetObjectPolicy(conf BucketConfig) (*Policy, error) {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}

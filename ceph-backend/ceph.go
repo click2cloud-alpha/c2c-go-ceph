@@ -30,7 +30,7 @@ func main() {
 	//if new_user!= nil{
 	//	fmt.Println(new_user)
 	//}
-	user, err := api.GetUser("user1")
+	user, err := api.GetUser("uma")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -47,7 +47,7 @@ func main() {
 		fmt.Println(api1)
 	}
 	bucketConfig := radosAPI.BucketConfig{
-		Bucket: "opensds-test1",
+		Bucket: "opensds-test-Uma",
 		UID:    uid,
 		Prefix: false,
 		Stats:  true,
@@ -66,5 +66,5 @@ func main() {
 	if error != nil {
 		fmt.Println(error)
 	}
-	fmt.Println("Testing the branch on remote repository")
+	fmt.Println("This is test branch for umaprasad")
 }

@@ -699,7 +699,7 @@ func (api *API) GetBucketPolicy(conf BucketConfig) (*Policy, error) {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -735,7 +735,7 @@ func (api *API) GetObjectPolicy(conf BucketConfig) (*Policy, error) {
 	prefix := true
 
 	prefix = conf.Prefix
-	body, _, err := api.call("GET", "/bucket", values, prefix, "policy")
+	body, _, err := api.call("GET", "/"+conf.Bucket, values, prefix, "policy")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}

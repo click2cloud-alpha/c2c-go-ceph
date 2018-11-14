@@ -897,5 +897,5 @@ type ObjectConfig struct {
 }
 
 func (api *API) PutObject(config ObjectConfig) {
-
+	fmt.Println("Hello World")
 }

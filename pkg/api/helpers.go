@@ -20,6 +20,14 @@ type UsageConfig struct {
 	RemoveAll   bool       `url:"remove-all,ifBoolIsTrue"`    // Required when uid is not specified, in order to acknowledge multi user data removal.
 }
 
+func (api *API) GetSignture() (siguture string) {
+	values := url.Values{}
+	values.Add("format", "json")
+	siguture = api.gen_sigure("PUT", "/user", values, true)
+
+	return siguture
+}
+
 // GetUsage requests bandwidth usage information.
 //
 // !! caps: usage=read !!

@@ -154,6 +154,8 @@ func (api *API) CreateUser(conf UserConfig) (*User, error) {
 		return nil, errs[0]
 	}
 	values.Add("format", "json")
+	siguture := api.gen_sigure("PUT", "/user", values, true)
+	fmt.Println(siguture)
 	body, _, err := api.call("PUT", "/user", values, true)
 	if err != nil {
 		return nil, err
@@ -876,6 +878,7 @@ func (api *API) DelCapability(conf CapConfig) ([]Capability, error) {
 		return nil, errs[0]
 	}
 	values.Add("format", "json")
+
 	body, _, err := api.call("DELETE", "/user", values, true, "caps")
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err

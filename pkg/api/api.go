@@ -32,6 +32,23 @@ func New(host, accessKey, secretKey string, adminPrefix ...string) (*API, error)
 	return &API{host, accessKey, secretKey, prefix}, nil
 }
 
+func (api *API) makeSignuture(verb, url string) (authoriztion string) {
+	// fmt.Printf("URL [%v]: %v\n", verb, url)
+	req, err := http.NewRequest(verb, url, nil)
+	if err != nil {
+		return
+	}
+	awsauth.SignS3(req, awsauth.Credentials{
+		AccessKeyID:     api.accessKey,
+		SecretAccessKey: api.secretKey,
+		Expiration:      time.Now().Add(1 * time.Minute)},
+	)
+	fmt.Println(req)
+	authoriztion = req.Header.Get("Authorization")
+
+	return string(authoriztion)
+}
+
 func (api *API) makeRequest(verb, url string) (body []byte, statusCode int, err error) {
 	var apiErr apiError
 	client := http.Client{}
@@ -47,6 +64,7 @@ func (api *API) makeRequest(verb, url string) (body []byte, statusCode int, err 
 		Expiration:      time.Now().Add(1 * time.Minute)},
 	)
 	fmt.Println(req)
+	fmt.Println(req.Header.Get("Authorization"))
 	resp, err := client.Do(req)
 	if err != nil {
 		return
@@ -78,5 +96,35 @@ func (api *API) call(verb, route string, args url.Values, usePrefix bool, sub ..
 	if statusCode != 200 {
 		err = fmt.Errorf("[%v]: %v", statusCode, err)
 	}
+	return
+}
+
+//
+//func (api *API) call2(verb,  route string, args url.Values, usePrefix bool, sub ...string)  (body []byte, statusCode int, err error) {
+//	subreq := ""
+//	if len(sub) > 0 {
+//		subreq = fmt.Sprintf("%s&", sub[0])
+//	}
+//	if usePrefix {
+//		route = fmt.Sprintf("/%s%s", api.prefix, route)
+//	}
+//	var apiErr apiError
+//	client := http.Client{}
+//
+//	// fmt.Printf("URL [%v]: %v\n", verb, url)
+//	req, err := http.NewRequest(verb, url, nil)
+//}
+
+func (api *API) gen_sigure(verb, route string, args url.Values, usePrefix bool, sub ...string) (body string) {
+	subreq := ""
+	if len(sub) > 0 {
+		subreq = fmt.Sprintf("%s&", sub[0])
+	}
+	if usePrefix {
+		route = fmt.Sprintf("/%s%s", api.prefix, route)
+	}
+	fmt.Println(route)
+	body = api.makeSignuture(verb, fmt.Sprintf("%v%v?%v%s", api.host, route, subreq, args.Encode()))
+
 	return
 }
